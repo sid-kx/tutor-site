@@ -1,0 +1,11 @@
+{
+  "name": "Home School Tutor",
+  "short_name": "HSTutor",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F8FAFC",
+  "theme_color": "#2563EB",
+  "icons": [
+    { "src": "/favicon.ico", "sizes": "48x48", "type": "image/x-icon" }
+  ]
+}
