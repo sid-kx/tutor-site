@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en-CA" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Worksheets &amp; Practice Packs | Home School Tutor</title>
+  <meta name="description" content="Canadian curriculum worksheets for Grades 1–8. Guided class practice, short homework to reinforce. Download sample packs and preview PDFs." />
+  <link rel="canonical" href="https://YOUR_DOMAIN/worksheets.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Worksheets &amp; Practice Packs" />
+  <meta property="og:description" content="Canadian curriculum worksheets for Grades 1–8—guided practice in class, short homework to reinforce." />
+  <meta property="og:image" content="assets/img/og-image.jpg" />
+
+  <!-- Styles -->
+  <link rel="preload" href="assets/css/style.css" as="style" />
+  <link rel="stylesheet" href="assets/css/style.css?v=2">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- ================= Header / Nav ================= -->
+  <header class="site-header" data-glass>
+    <div class="container header-inner">
+      <a class="brand" href="index.html">
+        <img src="assets/img/logo.svg" alt="Home School Tutor logo" width="36" height="36" />
+        <span class="brand-name">Home School Tutor</span>
+      </a>
+
+      <button id="nav-toggle" class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
+        <span class="visually-hidden">Toggle navigation</span>
+        <svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24" fill="none">
+          <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+
+      <nav id="primary-nav" class="primary-nav" aria-label="Primary">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="programs-pricing.html">Programs &amp; Pricing</a></li>
+          <li><a href="worksheets.html" aria-current="page">Worksheets</a></li>
+          <li><a class="btn btn-primary" href="contact-enroll.html">Contact / Enroll</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ================= MAIN ================= -->
+  <main id="main-content" class="container" data-page="worksheets">
+
+    <!-- ===== HERO ===== -->
+    <section id="wks-hero" class="section wks-hero" aria-labelledby="wks-hero-title">
+      <header class="section-head center">
+        <h1 id="wks-hero-title">Worksheets &amp; Practice Packs</h1>
+        <p class="section-sub">Canadian curriculum worksheets for Grades 1–8—guided practice in class, short homework to reinforce.</p>
+      </header>
+
+      <div class="wks-hero-card glass">
+        <p class="wks-hero-text">
+          Browse grade-based packs, preview samples, and download printable PDFs. All resources align with Ontario &amp; Canadian curriculum expectations.
+        </p>
+        <div class="wks-hero-ctas">
+          <a class="btn btn-primary" href="assets/pdfs/sample-pack.pdf" download>Download Sample Pack</a>
+          <a class="btn btn-outline" href="#chat" id="ask-chat-open">Ask a Question</a>
+      </div>
+    </section>
+
+    <!-- ===== GRADE TABS & CAROUSEL ===== -->
+    <section id="wks-grades" class="section wks-grades" aria-labelledby="wks-grades-title">
+      <header class="section-head center">
+        <h2 id="wks-grades-title">Browse by Grade</h2>
+        <p class="section-sub">Select a grade to view worksheet packs. Preview PDFs in a modal or download directly.</p>
+      </header>
+
+      <!-- Grade tabs -->
+      <nav class="wks-tabs glass" role="tablist" aria-label="Grade tabs">
+        <button class="wks-tab" role="tab" aria-selected="true" aria-controls="wks-carousel" id="wks-tab-g1" data-grade="1">Grade 1</button>
+        <button class="wks-tab" role="tab" aria-selected="false" aria-controls="wks-carousel" id="wks-tab-g2" data-grade="2">Grade 2</button>
+        <button class="wks-tab" role="tab" aria-selected="false" aria-controls="wks-carousel" id="wks-tab-g3" data-grade="3">Grade 3</button>
+        <button class="wks-tab" role="tab" aria-selected="false" aria-controls="wks-carousel" id="wks-tab-g4" data-grade="4">Grade 4</button>
+        <button class="wks-tab" role="tab" aria-selected="false" aria-controls="wks-carousel" id="wks-tab-g5" data-grade="5">Grade 5</button>
+        <button class="wks-tab" role="tab" aria-selected="false" aria-controls="wks-carousel" id="wks-tab-g6" data-grade="6">Grade 6</button>
+        <button class="wks-tab" role="tab" aria-selected="false" aria-controls="wks-carousel" id="wks-tab-g7" data-grade="7">Grade 7</button>
+        <button class="wks-tab" role="tab" aria-selected="false" aria-controls="wks-carousel" id="wks-tab-g8" data-grade="8">Grade 8</button>
+      </nav>
+
+      <!-- Carousel (JS injects slides) -->
+      <div class="wks-carousel glass" id="wks-carousel" role="region" aria-label="Worksheet packs carousel" tabindex="-1">
+        <div class="wks-carousel-track" id="wks-carousel-track"><!-- slides injected by JS --></div>
+        <div class="wks-carousel-controls">
+          <button class="wks-prev" aria-label="Previous slide">&#10094;</button>
+          <div class="wks-dots" id="wks-dots" aria-label="Slide pagination"></div>
+          <button class="wks-next" aria-label="Next slide">&#10095;</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== HOW WE TEACH ===== -->
+    <section id="wks-how" class="section wks-how" aria-labelledby="wks-how-title">
+      <header class="section-head center">
+        <h2 id="wks-how-title">How We Teach</h2>
+        <p class="section-sub">A simple, effective approach that builds skills and confidence.</p>
+      </header>
+
+      <div class="wks-how-grid">
+        <aside class="wks-pillars glass" aria-label="Teaching pillars">
+          <ul class="wks-pillar-list" role="list">
+            <li>
+              <span class="wks-pill-badge">Curriculum-Aligned</span>
+              <p>Every pack maps to Ontario &amp; Canadian expectations (Grades 1–8).</p>
+            </li>
+            <li>
+              <span class="wks-pill-badge">Skill-Tiered</span>
+              <p>We adjust difficulty so practice is challenging but achievable.</p>
+            </li>
+            <li>
+              <span class="wks-pill-badge">Guided → Independent</span>
+              <p>In-class coaching moves toward independent homework.</p>
+            </li>
+            <li>
+              <span class="wks-pill-badge">Assess &amp; Feedback</span>
+              <p>Short check-ins and quick feedback guide the next steps.</p>
+            </li>
+          </ul>
+        </aside>
+
+        <article class="wks-how-text glass">
+          <p>
+            We use Canadian curriculum worksheets to reinforce key concepts across Math, Science, and English.
+            In class, students complete guided practice with support from an OCT-certified teacher. For homework,
+            we assign <strong>1–2 sheets</strong> per week based on pace and level. We track progress and adjust
+            pack difficulty to keep momentum.
+          </p>
+          <ul class="wks-checklist" role="list">
+            <li>Guided class practice with clear examples</li>
+            <li>1–2 short, printable homework sheets</li>
+            <li>Progress tracking and targeted review</li>
+            <li>Downloadable PDFs; device-friendly viewing</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== FAQ ===== -->
+    <section id="wks-faq" class="section wks-faq" aria-labelledby="wks-faq-title">
+      <header class="section-head center">
+        <h2 id="wks-faq-title">Frequently Asked Questions</h2>
+      </header>
+
+      <div class="wks-faq-list">
+        <!-- Each item: button (question) + content (answer). Only one open at a time. -->
+        <article class="wks-faq-item glass">
+          <button class="wks-faq-q" aria-expanded="false" aria-controls="wks-a1" id="wks-q1" role="button">Which grades do you support?</button>
+          <div id="wks-a1" class="wks-faq-a" role="region" aria-labelledby="wks-q1">
+            <p>We provide worksheets and practice packs for <strong>Grades 1–8</strong>, aligned to Canadian curriculum expectations.</p>
+          </div>
+        </article>
+
+        <article class="wks-faq-item glass">
+          <button class="wks-faq-q" aria-expanded="false" aria-controls="wks-a2" id="wks-q2" role="button">Are worksheets aligned to the Canadian curriculum?</button>
+          <div id="wks-a2" class="wks-faq-a" role="region" aria-labelledby="wks-q2">
+            <p>Yes. Packs are mapped to Ontario and Canadian expectations with skills sequenced by grade.</p>
+          </div>
+        </article>
+
+        <article class="wks-faq-item glass">
+          <button class="wks-faq-q" aria-expanded="false" aria-controls="wks-a3" id="wks-q3" role="button">How much homework is assigned each week?</button>
+          <div id="wks-a3" class="wks-faq-a" role="region" aria-labelledby="wks-q3">
+            <p>Typically <strong>1–2 short sheets</strong>, tailored to your child’s pace and level.</p>
+          </div>
+        </article>
+
+        <article class="wks-faq-item glass">
+          <button class="wks-faq-q" aria-expanded="false" aria-controls="wks-a4" id="wks-q4" role="button">Can you adjust difficulty for my child?</button>
+          <div id="wks-a4" class="wks-faq-a" role="region" aria-labelledby="wks-q4">
+            <p>Absolutely. We tier questions and swap packs to keep challenge appropriate.</p>
+          </div>
+        </article>
+
+        <article class="wks-faq-item glass">
+          <button class="wks-faq-q" aria-expanded="false" aria-controls="wks-a5" id="wks-q5" role="button">Do you offer topic-specific practice (e.g., Fractions, Reading)?</button>
+          <div id="wks-a5" class="wks-faq-a" role="region" aria-labelledby="wks-q5">
+            <p>Yes—Math topics like Fractions, Decimals, Geometry; English reading &amp; writing; and Science skills.</p>
+          </div>
+        </article>
+
+        <article class="wks-faq-item glass">
+          <button class="wks-faq-q" aria-expanded="false" aria-controls="wks-a6" id="wks-q6" role="button">How do parents receive the worksheets/homework?</button>
+          <div id="wks-a6" class="wks-faq-a" role="region" aria-labelledby="wks-q6">
+            <p>We provide printed sheets and downloadable PDFs. We can also email packs upon request.</p>
+          </div>
+        </article>
+
+        <article class="wks-faq-item glass">
+          <button class="wks-faq-q" aria-expanded="false" aria-controls="wks-a7" id="wks-q7" role="button">What if my child finishes too quickly or struggles?</button>
+          <div id="wks-a7" class="wks-faq-a" role="region" aria-labelledby="wks-q7">
+            <p>We monitor progress and adjust—adding challenge problems or extra scaffolding as needed.</p>
+          </div>
+        </article>
+
+        <article class="wks-faq-item glass">
+          <button class="wks-faq-q" aria-expanded="false" aria-controls="wks-a8" id="wks-q8" role="button">Do you provide answer keys or example solutions?</button>
+          <div id="wks-a8" class="wks-faq-a" role="region" aria-labelledby="wks-q8">
+            <p>Yes. Many packs include answer keys or example solutions for review at home.</p>
+          </div>
+        </article>
+
+        <article class="wks-faq-item glass">
+          <button class="wks-faq-q" aria-expanded="false" aria-controls="wks-a9" id="wks-q9" role="button">Are PDFs printable and device-friendly?</button>
+          <div id="wks-a9" class="wks-faq-a" role="region" aria-labelledby="wks-q9">
+            <p>All PDFs are optimized for printing and easy on-screen viewing.</p>
+          </div>
+        </article>
+
+        <article class="wks-faq-item glass">
+          <button class="wks-faq-q" aria-expanded="false" aria-controls="wks-a10" id="wks-q10" role="button">How do I request extra practice for tests?</button>
+          <div id="wks-a10" class="wks-faq-a" role="region" aria-labelledby="wks-q10">
+            <p>Contact us with your topics and test date—we’ll prepare focused packs.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== PDF Modal ===== -->
+    <dialog id="wks-pdf-modal" class="wks-modal">
+      <div class="wks-modal-content glass" role="document">
+        <button class="wks-modal-close" aria-label="Close preview">✕</button>
+        <div id="wks-pdf-holder" class="wks-pdf-holder"><!-- PDF object injected here --></div>
+        <a id="wks-modal-download" class="btn btn-outline" href="#" download>Download PDF</a>
+      </div>
+    </dialog>
+
+  </main>
+
+  <!-- ================= Footer ================= -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>&copy; <span id="year"></span> Home School Tutor — Brampton, Ontario</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="programs-pricing.html">Programs &amp; Pricing</a>
+        <a href="worksheets.html" aria-current="page">Worksheets</a>
+        <a href="contact-enroll.html">Contact / Enroll</a>
+        <a href="sitemap.xml">Sitemap</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script defer src="assets/js/main.js"></script>
+  <!-- Chat widget -->
+    <div id="chat-widget" class="chat-widget" aria-hidden="true">
+    <div class="chat-panel glass" role="dialog" aria-modal="true" aria-labelledby="chat-title">
+        <header class="chat-header">
+        <h3 id="chat-title">Chat with Home School Tutor</h3>
+        <button class="chat-close" aria-label="Close chat">✕</button>
+        </header>
+
+        <div class="chat-body" id="chat-body" aria-live="polite"></div>
+
+        <form class="chat-input-row" id="chat-form">
+        <input type="text" id="chat-input" class="chat-input" placeholder="Type your question…" autocomplete="off" required />
+        <button class="btn btn-primary chat-send" type="submit">Send</button>
+        </form>
+
+        <div class="chat-footer">
+        <button class="btn btn-outline" id="chat-email">Email this conversation</button>
+        <small class="chat-note">Quick helper. For enrollment, use Contact / Enroll.</small>
+        </div>
+    </div>
+    </div>
+
+    <!-- Floating launcher (optional, always visible) -->
+    <button class="chat-launcher" id="chat-launcher" aria-label="Open chat">💬</button>
+</body>
+</html>

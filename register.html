@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en-CA" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Registration | Home School Tutor</title>
+  <meta name="description" content="Review your tutoring times and send your contact details to register." />
+  <!-- cache-bust just for this page -->
+  <link rel="stylesheet" href="assets/css/style.css?v=reg1" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="site-header" data-glass>
+    <div class="container header-inner">
+      <a class="brand" href="index.html">
+        <img src="assets/img/logo.svg" alt="Home School Tutor logo" width="36" height="36" />
+        <span class="brand-name">Home School Tutor</span>
+      </a>
+      <button id="nav-toggle" class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
+        <span class="visually-hidden">Toggle navigation</span>
+        <svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24" fill="none">
+          <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+      <nav id="primary-nav" class="primary-nav" aria-label="Primary">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="programs-pricing.html">Programs &amp; Pricing</a></li>
+          <li><a href="worksheets.html">Worksheets</a></li>
+          <li><a class="btn btn-primary" href="contact-enroll.html">Contact / Enroll</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="container" data-page="register">
+    <section class="section reg-hero">
+      <header class="section-head center">
+        <h1>Confirm Your Weekly Times</h1>
+        <p class="section-sub">Double-check the days &amp; times, make changes if needed, then send us your details.</p>
+      </header>
+    </section>
+
+    <section class="section reg-grid">
+      <!-- LEFT: editable scheduler (prefilled from Programs page) -->
+      <div class="grid-panel glass" id="reg-scheduler" data-scheduler="registration">
+        <div class="grid-head">
+          <div class="time-col">Time</div>
+          <div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div>
+        </div>
+        <div class="slot-grid" id="reg-slot-grid"><!-- built by JS --></div>
+
+        <div class="legend">
+          <span><span class="dot selected"></span> Selected</span>
+          <span><span class="dot available"></span> Available</span>
+        </div>
+
+        <div class="reg-links">
+          <a class="btn btn-outline" href="programs-pricing.html#scheduler">Back to Programs</a>
+        </div>
+      </div>
+
+      <!-- RIGHT: summary + form -->
+      <aside class="summary glass" id="reg-summary">
+        <h3>Plan Summary</h3>
+        <dl class="sum">
+          <div><dt>Days / week</dt><dd id="reg-days">0</dd></div>
+          <div><dt>Hours / month</dt><dd id="reg-hours">0</dd></div>
+          <div><dt>Price / month</dt><dd id="reg-price">$0</dd></div>
+        </dl>
+
+        <h3>Selected Slots</h3>
+        <ul class="selected-list" id="reg-list"><li>No time selected yet.</li></ul>
+
+        <hr class="reg-divider" />
+
+        <form id="reg-form" class="reg-form"
+              action="https://formsubmit.co/homeschooltutor.com@gmail.com" method="POST">
+          <!-- FormSubmit setup -->
+          <input type="hidden" name="_subject" value="New Registration – Home School Tutor">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_template" value="table">
+          <!-- Redirect back with toast -->
+          <input type="hidden" name="_next" value="programs-pricing.html?toast=sent#scheduler">
+          <!-- Hidden fields populated by JS -->
+          <input type="hidden" name="Selected_Slots" id="reg-slots-hidden">
+          <input type="hidden" name="Days_per_Week" id="reg-days-hidden">
+          <input type="hidden" name="Hours_per_Month" id="reg-hours-hidden">
+          <input type="hidden" name="Price_per_Month" id="reg-price-hidden">
+
+          <div class="reg-fields">
+            <label>Parent/Guardian Name
+              <input class="input" type="text" name="Parent_Name" required>
+            </label>
+            <label>Email
+              <input class="input" type="email" name="email" required>
+            </label>
+            <label>Phone
+              <input class="input" type="tel" name="Phone" required>
+            </label>
+            <label>Questions or Notes
+              <textarea class="input" name="Message" rows="5" placeholder="Any questions, scheduling notes, or goals?"></textarea>
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn-primary" id="reg-send">Send Info</button>
+          <p class="fine-print">We’ll reply within 1–2 business days to book a demo class and confirm next steps.</p>
+        </form>
+      </aside>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>&copy; <span id="year"></span> Home School Tutor — Brampton, Ontario</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="programs-pricing.html">Programs &amp; Pricing</a>
+        <a href="worksheets.html">Worksheets</a>
+        <a href="contact-enroll.html">Contact / Enroll</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script defer src="assets/js/main.js"></script>
+</body>
+</html>
