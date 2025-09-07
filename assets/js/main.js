@@ -540,9 +540,43 @@ document.addEventListener('DOMContentLoaded', () => {
     if (el) el.setAttribute('aria-pressed','true');
   });
 
+  // Enforce: max 4 unique days; only one time per day (replace if new time on same day)
   grid.addEventListener('click', (e)=>{
-    const b = e.target.closest('.slot'); if (!b) return;
-    b.setAttribute('aria-pressed', b.getAttribute('aria-pressed')==='true'?'false':'true');
+    const b = e.target.closest('.slot');
+    if (!b) return;
+
+    const day = b.dataset.day;
+    const isPressed = b.getAttribute('aria-pressed') === 'true';
+
+    // 1) Toggle OFF if this exact slot was already selected
+    if (isPressed) {
+      b.setAttribute('aria-pressed', 'false');
+      updateSummary();
+      return;
+    }
+
+    // 2) If this day already has a selected time, replace it
+    const sameDaySelected = grid.querySelectorAll(`.slot[aria-pressed="true"][data-day="${day}"]`);
+    if (sameDaySelected.length) {
+      sameDaySelected.forEach(el => el.setAttribute('aria-pressed','false'));
+      b.setAttribute('aria-pressed','true');
+      updateSummary();
+      return;
+    }
+
+    // 3) New day selection: enforce 4-day limit
+    const selectedDaysCount = new Set(
+      [...grid.querySelectorAll('.slot[aria-pressed="true"]')].map(el => el.dataset.day)
+    ).size;
+
+    if (selectedDaysCount >= 4) {
+      // Limit reached — do not allow selecting a 5th day
+      alert('Limit reached: you can choose up to 4 days per week.');
+      return;
+    }
+
+    // 4) OK to select
+    b.setAttribute('aria-pressed','true');
     updateSummary();
   });
 
@@ -607,4 +641,117 @@ document.addEventListener('DOMContentLoaded', () => {
   el.textContent = 'Your information has been emailed to homeschooltutor.com@gmail.com. We’ll reach back in 1–2 business days.';
   document.body.appendChild(el);
   setTimeout(()=> el.remove(), 3000);
+})();
+/* ===========================
+   Worksheets: locked thumbnails
+   =========================== */
+(function lockWorksheetThumbs(){
+  const page = document.querySelector('[data-page="worksheets"]');
+  if (!page) return;
+
+  const LOCK_SRC = 'assets/img/pdf-locked.png';
+
+  function apply(root = page){
+    root.querySelectorAll(
+      '.wks-carousel img, .wks-slide img, .wks-thumb img, img[data-role="wks-thumb"]'
+    ).forEach(img => {
+      // If src is empty, broken, or we want to force locked thumbnail, set it:
+      img.src = LOCK_SRC;
+      img.loading = 'lazy';
+      img.decoding = 'async';
+      if (!img.alt || /thumbnail/i.test(img.alt)) {
+        img.alt = 'Locked PDF thumbnail';
+      }
+    });
+  }
+
+  // Initial pass (for static markup)
+  apply();
+
+  // Catch slides added later (if your carousel builds them in JS)
+  new MutationObserver(list => {
+    for (const m of list) {
+      m.addedNodes.forEach(n => {
+        if (n.nodeType === 1) apply(n);
+      });
+    }
+  }).observe(page, { childList: true, subtree: true });
+})();
+/* =======================================================
+   Contact / Enroll page
+   - Reads the saved scheduler choices from localStorage
+   - Renders the selected times list
+   - Prefills hidden fields so the email includes the plan
+   - Shows a simple toast when ?toast=sent is present
+   ======================================================= */
+
+function initContactEnroll() {
+  const form  = document.getElementById('ce-form');
+  const listEl = document.getElementById('ce-slots');
+  if (!form || !listEl) return; // Not on this page
+
+  // Read values written by the Programs/Scheduler page
+  let slots = [];
+  try { slots = JSON.parse(localStorage.getItem('hst_selectedSlots') || '[]'); } catch (_) {}
+  const days  = localStorage.getItem('hst_daysPerWeek')   || '';
+  const hours = localStorage.getItem('hst_hoursPerMonth') || '';
+  const price = localStorage.getItem('hst_pricePerMonth') || '';
+
+  // Normalize slot text for display + email
+  const toText = s => (typeof s === 'string')
+    ? s
+    : `${s.day ?? ''} ${s.label ?? s.time ?? ''}`.trim();
+
+  // Render list of selected times
+  listEl.innerHTML = slots.length
+    ? slots.map(s => `<li class="slot-pill">${toText(s)}</li>`).join('')
+    : '<li class="muted">No times selected yet.</li>';
+
+  // Push the same values into hidden inputs for the email payload
+  const hiddenMap = {
+    'ce-slots-hidden': slots.map(toText).join(', '),
+    'ce-days-hidden' : days,
+    'ce-hours-hidden': hours,
+    'ce-price-hidden': price
+  };
+  Object.entries(hiddenMap).forEach(([id, val]) => {
+    const el = document.getElementById(id);
+    if (el) el.value = val;
+  });
+}
+
+// Run after DOM is ready (script is deferred, but this is safe)
+document.addEventListener('DOMContentLoaded', initContactEnroll);
+
+/* Optional: show a small toast if redirected with ?toast=sent
+   (used after successful FormSubmit _next=...&toast=sent) */
+(function showQueryToast(){
+  const qp = new URLSearchParams(location.search);
+  const toast = qp.get('toast');
+  if (!toast) return;
+
+  let message = '';
+  if (toast === 'sent') {
+    message = 'Your information was sent. We will contact you in 1–2 business days.';
+  } else {
+    message = toast;
+  }
+
+  const t = document.createElement('div');
+  t.setAttribute('role','status');
+  t.style.position = 'fixed';
+  t.style.left = '50%';
+  t.style.bottom = '24px';
+  t.style.transform = 'translateX(-50%)';
+  t.style.padding = '12px 16px';
+  t.style.borderRadius = '12px';
+  t.style.background = 'rgba(255,255,255,.85)';
+  t.style.backdropFilter = 'blur(12px)';
+  t.style.boxShadow = '0 8px 24px rgba(25,69,154,.15)';
+  t.style.color = '#0f1b2d';
+  t.style.zIndex = '1000';
+  t.textContent = message;
+
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 3000);
 })();

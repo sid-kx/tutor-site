@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">Home School Tutor Logo</title>
+  <desc id="desc">Outlined house with a graduation cap inside, in light blue stroke, matching the site brand.</desc>
+  <defs>
+    <style>
+      .stroke{stroke:#7BA6BF;stroke-width:12;stroke-linecap:round;stroke-linejoin:round}
+    </style>
+  </defs>
+  <path class="stroke" d="M32 122l96-74 96 74v98a8 8 0 0 1-8 8H40a8 8 0 0 1-8-8v-98z"/>
+  <polygon class="stroke" points="128,104 64,136 128,168 192,136 128,104"/>
+  <path class="stroke" d="M88 154v16c0 5 32 18 40 18s40-13 40-18v-16"/>
+  <path class="stroke" d="M160 148v42"/>
+  <path class="stroke" d="M160 190c0 10 0 18 12 18"/>
+</svg>

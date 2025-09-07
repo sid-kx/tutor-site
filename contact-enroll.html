@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en-CA" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contact / Enroll | Home School Tutor</title>
+  <meta name="description" content="Contact Home School Tutor to book a free assessment or enroll. Small-group, OCT-certified tutoring in Brampton." />
+  <link rel="icon" href="favicon.ico" />
+  <link rel="manifest" href="site.webmanifest" />
+  <link rel="preload" href="assets/css/style.css" as="style" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- Header -->
+  <header class="site-header" data-glass>
+    <div class="container header-inner">
+      <a class="brand" href="index.html">
+        <img src="assets/img/logo.svg" alt="Home School Tutor logo" class="brand-logo" width="32" height="32" />
+        <span class="brand-name">Home School Tutor</span>
+      </a>
+
+      <button id="nav-toggle" class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
+        <span class="visually-hidden">Toggle navigation</span>
+        <svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24" fill="none">
+          <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+
+      <nav id="primary-nav" class="primary-nav" aria-label="Primary">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="programs-pricing.html">Programs &amp; Pricing</a></li>
+          <li><a href="worksheets.html">Worksheets</a></li>
+          <li><a class="btn btn-primary" aria-current="page" href="contact-enroll.html">Contact / Enroll</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" class="container">
+    <header class="section-head center" style="margin-top: var(--space-8);">
+      <h1>Contact &amp; Enrollment</h1>
+      <p class="section-sub">Have questions or ready to book a free diagnostic? Send your details and we’ll connect.</p>
+    </header>
+
+    <!-- NOTE -->
+    <section class="section" aria-labelledby="note-title">
+      <div class="glass" style="padding: var(--space-5);">
+        <h2 id="note-title" class="visually-hidden">Important note</h2>
+        <p style="margin:0;font-weight:600;">
+          <span class="badge" style="margin-right:8px;">NOTE</span>
+          Web billing system is currently unavailable. We accept payment via <strong>e-transfer</strong>.
+          Please fill in your info so we can arrange a demo class and discuss payment. Thank you!
+        </p>
+      </div>
+    </section>
+
+    <!-- Confirm weekly times + form -->
+    <section class="section" aria-labelledby="confirm-title">
+      <div class="grid-2">
+        <!-- Selected schedule -->
+        <div class="glass" style="padding: var(--space-5);">
+          <h2 id="confirm-title">Confirm Your Weekly Times</h2>
+          <p class="section-sub">These are the times you selected. You can go back to adjust if needed.</p>
+          <ul id="ce-slots" class="selected-slots" role="list" style="margin-top: var(--space-4);"></ul>
+          <div class="section-cta" style="margin-top: var(--space-5);">
+            <a class="btn btn-outline" href="programs-pricing.html#scheduler">Back to Programs</a>
+          </div>
+        </div>
+
+        <!-- Contact / enroll form -->
+        <aside class="glass" style="padding: var(--space-5);">
+          <h3>Send Your Details</h3>
+          <p class="section-sub">We’ll reply within 1–2 business days to book a demo class and confirm next steps.</p>
+
+          <form id="ce-form" action="https://formsubmit.co/homeschooltutor.com@gmail.com" method="POST" class="reg-form" style="margin-top: var(--space-4);">
+            <!-- FormSubmit helpers -->
+            <input type="hidden" name="_subject" value="Contact/Enroll Submission – Home School Tutor" />
+            <input type="hidden" name="_captcha" value="false" />
+            <input type="hidden" name="_template" value="table" />
+            <input type="hidden" name="_next" value="programs-pricing.html?toast=sent#scheduler" />
+
+            <!-- Hidden fields populated from selection -->
+            <input type="hidden" name="Selected_Slots" id="ce-slots-hidden" />
+            <input type="hidden" name="Days_per_Week" id="ce-days-hidden" />
+            <input type="hidden" name="Hours_per_Month" id="ce-hours-hidden" />
+            <input type="hidden" name="Price_per_Month" id="ce-price-hidden" />
+
+            <label>Parent/Guardian Name
+              <input class="input" type="text" name="Parent_Name" required />
+            </label>
+
+            <label>Email
+              <input class="input" type="email" name="email" required />
+            </label>
+
+            <label>Phone
+              <input class="input" type="tel" name="Phone" />
+            </label>
+
+            <label>Questions or Notes
+              <textarea class="input" name="Notes" rows="4" placeholder="Any questions, scheduling notes, or goals?"></textarea>
+            </label>
+
+            <button class="btn btn-primary" type="submit">Send Info</button>
+          </form>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Map + contact info -->
+    <section class="section" aria-labelledby="visit-title">
+      <div class="grid-2">
+        <figure class="glass" style="padding:0;overflow:hidden;" aria-labelledby="visit-title">
+          <figcaption class="visually-hidden">Map of our main intersection</figcaption>
+          <iframe
+            title="Map – Steeles Ave & McLaughlin Rd, Brampton"
+            width="100%" height="420" style="border:0;display:block;"
+            loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps?q=Steeles%20Ave%20W%20%26%20McLaughlin%20Rd%20S,%20Brampton%20ON&output=embed">
+          </iframe>
+        </figure>
+
+        <aside class="glass" style="padding: var(--space-5);">
+          <h3 id="visit-title">Reach Us Directly</h3>
+          <ul class="contact-list" role="list" style="margin-top: var(--space-4);">
+            <li><strong>Phone:</strong> <a href="tel:+16472800673">(647) 280-0673</a></li>
+            <li><strong>Email:</strong> <a href="mailto:homeschooltutor.com@gmail.com">homeschooltutor.com@gmail.com</a></li>
+            <li><strong>Instagram:</strong> <a href="https://instagram.com/home_school_tutor" target="_blank" rel="noopener">@home_school_tutor</a></li>
+            <li><strong>Location:</strong> Steeles Ave &amp; McLaughlin Rd, Brampton</li>
+          </ul>
+
+          <div class="section-cta" style="margin-top: var(--space-5);">
+            <a class="btn btn-outline" href="programs-pricing.html">See programs &amp; pricing</a>
+            <a class="btn btn-primary" href="worksheets.html">Browse worksheets</a>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>&copy; <span id="year"></span> Home School Tutor — Brampton, Ontario</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="programs-pricing.html">Programs &amp; Pricing</a>
+        <a href="worksheets.html">Worksheets</a>
+        <a href="contact-enroll.html" aria-current="page">Contact / Enroll</a>
+        <a href="sitemap.xml">Sitemap</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script defer src="assets/js/main.js"></script>
+  <script>
+    // Prefill summary + hidden fields from localStorage (same keys as programs/register)
+    (function(){
+      const slots = JSON.parse(localStorage.getItem('hst_selectedSlots')||'[]');
+      const days  = localStorage.getItem('hst_daysPerWeek')  || '';
+      const hours = localStorage.getItem('hst_hoursPerMonth')|| '';
+      const price = localStorage.getItem('hst_pricePerMonth')|| '';
+
+      const list = document.getElementById('ce-slots');
+      const toText = s => typeof s === 'string' ? s : `${s.day} ${s.label||s.time||''}`.trim();
+
+      if (list) {
+        list.innerHTML = slots.length
+          ? slots.map(s => `<li class="slot-pill">${toText(s)}</li>`).join('')
+          : '<li class="muted">No times selected yet.</li>';
+      }
+
+      const setVal = (id,val)=>{ const el=document.getElementById(id); if(el) el.value = val; };
+      setVal('ce-slots-hidden', slots.map(toText).join(', '));
+      setVal('ce-days-hidden',  days);
+      setVal('ce-hours-hidden', hours);
+      setVal('ce-price-hidden', price);
+    })();
+  </script>
+</body>
+</html>
