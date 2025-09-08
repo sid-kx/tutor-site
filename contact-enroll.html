@@ -7,8 +7,17 @@
   <meta name="description" content="Contact Home School Tutor to book a free assessment or enroll. Small-group, OCT-certified tutoring in Brampton." />
   <link rel="icon" href="favicon.ico" />
   <link rel="manifest" href="site.webmanifest" />
-  <link rel="preload" href="assets/css/style.css" as="style" />
-  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="preload" href="assets/css/style.css?v=20250908-4" as="style" />
+  <link rel="stylesheet" href="assets/css/style.css?v=20250908-4" />
+  <style>
+    /* Inline override to ensure the navbar Contact/Enroll button is visible
+       immediately on this page load, even if external CSS is cached. */
+    .primary-nav a.btn[aria-current="page"] {
+      background: rgba(37,99,235,0.12) !important;
+      color: #000 !important;
+      font-weight: 800 !important;
+    }
+  </style>
 </head>
 
 <body>

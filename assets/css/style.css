@@ -122,6 +122,13 @@ a:hover { text-decoration: underline; }
   background: rgba(37,99,235,0.05);
 }
 
+/* Specific styling for navbar buttons when they are the active page */
+.primary-nav a.btn[aria-current="page"] {
+  background: rgba(37,99,235,0.12); /* lighter blue */
+  color: #000; /* black text */
+  font-weight: 800; /* bold */
+}
+
 /* Mobile nav */
 .nav-toggle {
   display: inline-flex; align-items: center; justify-content: center;
@@ -884,7 +891,7 @@ section + section { margin-top: var(--space-6); }
 }
 .grid-head {
   display: grid; gap: 8px;
-  grid-template-columns: 110px repeat(5, 1fr);
+  grid-template-columns: 110px repeat(4, 1fr);
   margin-bottom: var(--space-2);
   color: rgba(11,18,32,0.70); font-weight: 700;
 }
@@ -892,7 +899,7 @@ section + section { margin-top: var(--space-6); }
 
 .slot-grid {
   display: grid; gap: 8px;
-  grid-template-columns: 110px repeat(5, 1fr);
+  grid-template-columns: 110px repeat(4, 1fr);
   overflow-x: auto;
 }
 .timecell {
@@ -936,7 +943,32 @@ section + section { margin-top: var(--space-6); }
   background: rgba(15,23,42,0.06); border: 1px solid rgba(255,255,255,0.55);
 }
 .limit-note { margin-top: var(--space-2); color: #9b1b1b; font-weight: 700; }
+/* --- Scheduler desktop alignment fix --- */
+.grid-head,
+.slot-grid{
+  /* Always place items left-to-right, row by row */
+  direction: ltr;
+  grid-auto-flow: row;
+  width: 100%;
+}
 
+/* Remove horizontal scroll on wide screens (kept on narrow for safety) */
+@media (min-width: 900px){
+  .grid-head,
+  .slot-grid{
+    overflow-x: visible;
+  }
+}
+
+/* Guard: make sure the 110px time column is truly the first column */
+.grid-head{
+  grid-template-columns: 110px repeat(4, 1fr);
+}
+.slot-grid{
+  grid-template-columns: 110px repeat(4, 1fr);
+  justify-items: stretch;
+  align-items: stretch;
+}
 /* CTA state */
 #proceed-btn.disabled { opacity: .55; pointer-events: none; }
 /* ===============================
@@ -971,7 +1003,7 @@ section + section { margin-top: var(--space-6); }
 /* Tabs + Carousel */
 .wks-grades { padding: var(--space-5) var(--space-4); }
 .wks-tabs {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-2);
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-2);
   padding: var(--space-3);
   border-radius: var(--radius);
   background: linear-gradient(180deg, rgba(255,255,255,0.58), rgba(255,255,255,0.48));
@@ -985,6 +1017,9 @@ section + section { margin-top: var(--space-6); }
   border: 1px solid rgba(255,255,255,0.60);
   cursor: pointer; font-weight: 700;
   transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease;
+  min-width: 0;
+  white-space: normal;
+  word-break: break-word;
 }
 .wks-tab[aria-selected="true"] {
   background: rgba(37,99,235,0.12);
@@ -1032,19 +1067,85 @@ section + section { margin-top: var(--space-6); }
 .wks-checklist li { position: relative; padding-left: 26px; }
 .wks-checklist li::before { content: "✓"; position: absolute; left: 0; top: 0; color: var(--success); font-weight: 900; }
 
+/* Center content inside the How We Teach article */
+.wks-how-text {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.wks-how-text p {
+  max-width: 56ch;
+  margin: 0 0 var(--space-3);
+}
+.wks-checklist {
+  justify-items: center;
+  margin-top: var(--space-3);
+}
+.wks-checklist li {
+  padding-left: 0; /* remove left padding for centered layout */
+  display: inline-flex;
+  align-items: center;
+}
+.wks-checklist li::before {
+  position: static;
+  margin-right: 10px;
+}
+
 /* FAQ */
 .wks-faq { padding: var(--space-5) var(--space-4); }
 .wks-faq-list { display: grid; gap: var(--space-3); }
-.wks-faq-item { padding: var(--space-3); border-radius: var(--radius); background: linear-gradient(180deg, rgba(255,255,255,0.60), rgba(255,255,255,0.50)); transition: box-shadow .25s ease, transform .25s ease; }
+.wks-faq-item { padding: 0; border-radius: var(--radius); background: linear-gradient(180deg, rgba(255,255,255,0.60), rgba(255,255,255,0.50)); transition: box-shadow .25s ease, transform .25s ease; }
 .wks-faq-item:hover { box-shadow: 0 16px 40px rgba(37,99,235,0.18); transform: translateY(-2px); }
-.wks-faq-q { width: 100%; text-align: left; font-weight: 800; background: transparent; border: 0; padding: 8px 0; cursor: pointer; }
+.wks-faq-q { width: 100%; text-align: left; font-weight: 800; background: transparent; border: 0; padding: 12px 16px; cursor: pointer; position: relative; }
 .wks-faq-q:focus-visible { outline: 3px solid rgba(37,99,235,0.45); outline-offset: 2px; }
-.wks-faq-a { overflow: hidden; max-height: 0; transition: max-height .28s ease; }
+
+/* Hide answers by default via CSS so collapsed cards remain small. JS may still set inline max-heights, but this gives a reliable initial state. */
+
+.wks-faq-a {
+  overflow: hidden;
+  max-height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 16px;
+  padding-right: 16px;
+  transition: max-height .28s ease, padding .28s ease;
+}
 .wks-faq-a p { margin: 0 0 8px; color: rgba(11,18,32,0.86); }
-.wks-faq-a { transition: max-height .28s ease, padding .28s ease; }
-.wks-faq-a[style*="max-height: 0"] { padding-top: 0; padding-bottom: 0; }
-.wks-faq-a:not([style*="max-height: 0"]) { padding-top: 8px; padding-bottom: 8px; }
+
+/* When the button is expanded, reveal the adjacent answer */
+.wks-faq-q[aria-expanded="true"] + .wks-faq-a {
+  max-height: 600px; /* plenty to show the content */
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
 .wks-dot { width: 10px; height: 10px; }
+
+/* Add a plus sign indicator on the right of each FAQ question; switch to × when open */
+.wks-faq-q { padding-right: 52px; }
+.wks-faq-q::after {
+  content: "+";
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-weight: 900;
+  font-size: 1.1rem;
+  color: rgba(11,18,32,0.45);
+  transition: transform .18s ease, color .18s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+.wks-faq-q[aria-expanded="true"]::after {
+  content: "\00D7"; /* multiply sign */
+  color: var(--primary);
+  transform: translateY(-50%) scale(1.05);
+}
+
+/* Slight visual emphasis for open item */
+.wks-faq-q[aria-expanded="true"] {
+  color: rgba(11,18,32,0.95);
+}
 
 /* Modal */
 .wks-modal { border: 0; padding: 0; background: transparent; }
@@ -1068,6 +1169,10 @@ section + section { margin-top: var(--space-6); }
 .wks-next:focus-visible {
   outline: 3px solid rgba(37,99,235,0.45);
   outline-offset: 2px;
+}
+@media (max-width: 420px) {
+  .wks-tabs { padding: var(--space-2); gap: var(--space-2); }
+  .wks-tab { padding: 8px; font-size: 0.95rem; }
 }
 /* ===== Chat widget (chat-*) ===== */
 .chat-launcher{
@@ -1249,8 +1354,14 @@ img[data-role="wks-thumb"]{
 }
 .contact-list a:hover { text-decoration: underline; }
 
-/* Minor spacing for CTA buttons */
-.section-cta .btn { margin-right: var(--space-2); }
+/* CTA container: use gap so buttons get consistent horizontal and vertical spacing when wrapped */
+.section-cta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+.section-cta .btn { margin: 0; }
 /* ===============================
    Contact / Enroll page (ce-*)
    =============================== */

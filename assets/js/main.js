@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const grid = document.getElementById('slot-grid');
   if (!grid) return; // only on programs-pricing page
 
-  const DAYS = ['Mon','Tue','Wed','Thu','Fri'];
+  const DAYS = (grid.dataset.days ? grid.dataset.days.split(',').map(s => s.trim()).filter(Boolean) : ['Mon','Tue','Wed','Fri']);
   // Start times allowed; each class = 90 minutes, latest start 6:30 PM
   const STARTS = [
     { v: '16:00', label: '4:00 PM' },
@@ -454,32 +454,59 @@ document.addEventListener('DOMContentLoaded', () => {
    =========================================================== */
 
 /* A) Programs page: Proceed button saves selected slots */
-(function(){
+(function () {
   const proceed = document.getElementById('proceed-btn');
   if (!proceed) return;
 
-  // helper: ensure every .slot has data-day/start/end even if HTML lacked it
+  // canonical time rows the grid uses (6 rows)
+  const TIMES = [
+    ['16:00','17:30'], ['16:30','18:00'], ['17:00','18:30'],
+    ['17:30','19:00'], ['18:00','19:30'], ['18:30','20:00']
+  ];
+
+  // Get desired days for this grid (default to Mon/Tue/Wed/Fri)
+  function getDays(grid) {
+    return (grid && grid.dataset.days)
+      ? grid.dataset.days.split(',')
+      : ['Mon','Tue','Wed','Fri'];
+  }
+
+  // Ensure every .slot has data-day/start/end mapped correctly
+  // and drop any overflow columns beyond the days list (e.g., a stray Thu)
   function ensureSlotData() {
     const grid = document.querySelector('.slot-grid');
     if (!grid) return;
-    const days  = ['Mon','Tue','Wed','Thu','Fri'];
-    const times = [
-      ['16:00','17:30'], ['16:30','18:00'], ['17:00','18:30'],
-      ['17:30','19:00'], ['18:00','19:30'], ['18:30','20:00']
-    ];
-    const buttons = grid.querySelectorAll('button.slot');
+
+    const days = getDays(grid);             // e.g., ["Mon","Tue","Wed","Fri"]
+    const buttons = Array.from(grid.querySelectorAll('button.slot'));
+
+    // How many buttons per row do we *actually* have right now?
+    const rows = TIMES.length;              // 6
+    const total = buttons.length;
+    const perRow = Math.max(1, Math.floor(total / rows)); // what the DOM rendered
+
     buttons.forEach((btn, i) => {
-      const col = i % days.length;
-      const row = Math.floor(i / days.length);
+      const col = i % perRow;               // real column index in DOM
+      const row = Math.floor(i / perRow);   // 0..5
+
+      // If DOM has more columns than our days (e.g., a 5th "Thu"), remove extras
+      if (col >= days.length) {
+        btn.remove();                       // drop overflow column cells
+        return;
+      }
+
+      // Map to our target day/time model
       btn.dataset.day   ||= days[col];
-      btn.dataset.start ||= times[row][0];
-      btn.dataset.end   ||= times[row][1];
-      if (!btn.hasAttribute('aria-pressed')) btn.setAttribute('aria-pressed','false');
+      btn.dataset.start ||= TIMES[row][0];
+      btn.dataset.end   ||= TIMES[row][1];
+
+      if (!btn.hasAttribute('aria-pressed')) btn.setAttribute('aria-pressed', 'false');
     });
   }
+
   ensureSlotData();
 
-  proceed.addEventListener('click', (e)=>{
+  proceed.addEventListener('click', (e) => {
     e.preventDefault();
     ensureSlotData();
 
@@ -490,7 +517,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const uniqueDays = [...new Set(picked.map(s => s.day))].length;
     const hoursPerMonth = picked.length * 1.5 * 4;
-    const priceMap = {1:75,2:125,3:200,4:275};
+    const priceMap = { 1: 75, 2: 125, 3: 200, 4: 275 };
     const price = priceMap[uniqueDays] || 0;
 
     sessionStorage.setItem('hstSelectedSlots', JSON.stringify(picked));
@@ -503,7 +530,7 @@ document.addEventListener('DOMContentLoaded', () => {
 })();
 
 /* B) Registration page: build grid, restore choices, fill summary + form */
-(function initRegistration(){
+(function initRegistration() {
   const page = document.querySelector('[data-page="register"]');
   if (!page) return;
 
@@ -511,22 +538,23 @@ document.addEventListener('DOMContentLoaded', () => {
     ['16:00','17:30'], ['16:30','18:00'], ['17:00','18:30'],
     ['17:30','19:00'], ['18:00','19:30'], ['18:30','20:00']
   ];
-  const days = ['Mon','Tue','Wed','Thu','Fri'];
+  // Registration also uses 4 days (no Thu)
+  const days = ['Mon', 'Tue', 'Wed', 'Fri'];
 
   const grid = document.getElementById('reg-slot-grid');
 
   // build rows
-  const fmt = (s)=>{ const [h,m]=s.split(':').map(Number); const pm=h>=12; const hh=((h+11)%12)+1; return `${hh}:${m.toString().padStart(2,'0')} ${pm?'PM':'AM'}`; };
-  times.forEach(([start,end])=>{
-    const row = document.createElement('div'); row.style.display='contents';
+  const fmt = (s) => { const [h, m] = s.split(':').map(Number); const pm = h >= 12; const hh = ((h + 11) % 12) + 1; return `${hh}:${m.toString().padStart(2,'0')} ${pm ? 'PM' : 'AM'}`; };
+  times.forEach(([start, end]) => {
+    const row = document.createElement('div'); row.style.display = 'contents';
 
-    const tc = document.createElement('div'); tc.className='timecell'; tc.textContent = `${fmt(start)} – ${fmt(end)}`; row.appendChild(tc);
+    const tc = document.createElement('div'); tc.className = 'timecell'; tc.textContent = `${fmt(start)} – ${fmt(end)}`; row.appendChild(tc);
 
-    days.forEach(d=>{
+    days.forEach(d => {
       const btn = document.createElement('button');
-      btn.type='button'; btn.className='slot'; btn.textContent='Select';
-      btn.dataset.day=d; btn.dataset.start=start; btn.dataset.end=end;
-      btn.setAttribute('aria-pressed','false');
+      btn.type = 'button'; btn.className = 'slot'; btn.textContent = 'Select';
+      btn.dataset.day = d; btn.dataset.start = start; btn.dataset.end = end;
+      btn.setAttribute('aria-pressed', 'false');
       row.appendChild(btn);
     });
 
@@ -534,14 +562,14 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // restore
-  const stored = JSON.parse(sessionStorage.getItem('hstSelectedSlots')||'[]');
-  stored.forEach(p=>{
+  const stored = JSON.parse(sessionStorage.getItem('hstSelectedSlots') || '[]');
+  stored.forEach(p => {
     const el = grid.querySelector(`.slot[data-day="${p.day}"][data-start="${p.start}"][data-end="${p.end}"]`);
-    if (el) el.setAttribute('aria-pressed','true');
+    if (el) el.setAttribute('aria-pressed', 'true');
   });
 
   // Enforce: max 4 unique days; only one time per day (replace if new time on same day)
-  grid.addEventListener('click', (e)=>{
+  grid.addEventListener('click', (e) => {
     const b = e.target.closest('.slot');
     if (!b) return;
 
@@ -558,8 +586,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2) If this day already has a selected time, replace it
     const sameDaySelected = grid.querySelectorAll(`.slot[aria-pressed="true"][data-day="${day}"]`);
     if (sameDaySelected.length) {
-      sameDaySelected.forEach(el => el.setAttribute('aria-pressed','false'));
-      b.setAttribute('aria-pressed','true');
+      sameDaySelected.forEach(el => el.setAttribute('aria-pressed', 'false'));
+      b.setAttribute('aria-pressed', 'true');
       updateSummary();
       return;
     }
@@ -570,34 +598,33 @@ document.addEventListener('DOMContentLoaded', () => {
     ).size;
 
     if (selectedDaysCount >= 4) {
-      // Limit reached — do not allow selecting a 5th day
       alert('Limit reached: you can choose up to 4 days per week.');
       return;
     }
 
     // 4) OK to select
-    b.setAttribute('aria-pressed','true');
+    b.setAttribute('aria-pressed', 'true');
     updateSummary();
   });
 
-  const outDays  = document.getElementById('reg-days');
+  const outDays = document.getElementById('reg-days');
   const outHours = document.getElementById('reg-hours');
   const outPrice = document.getElementById('reg-price');
-  const outList  = document.getElementById('reg-list');
+  const outList = document.getElementById('reg-list');
 
   const hidSlots = document.getElementById('reg-slots-hidden');
-  const hidDays  = document.getElementById('reg-days-hidden');
+  const hidDays = document.getElementById('reg-days-hidden');
   const hidHours = document.getElementById('reg-hours-hidden');
   const hidPrice = document.getElementById('reg-price-hidden');
 
-  function updateSummary(){
-    const selected = [...grid.querySelectorAll('.slot[aria-pressed="true"]')].map(el=>({
+  function updateSummary() {
+    const selected = [...grid.querySelectorAll('.slot[aria-pressed="true"]')].map(el => ({
       day: el.dataset.day, start: el.dataset.start, end: el.dataset.end
     }));
 
-    const uniqueDays = [...new Set(selected.map(s=>s.day))].length;
+    const uniqueDays = [...new Set(selected.map(s => s.day))].length;
     const hoursPerMonth = selected.length * 1.5 * 4;
-    const priceMap = {1:75,2:125,3:200,4:275};
+    const priceMap = { 1: 75, 2: 125, 3: 200, 4: 275 };
     const price = priceMap[uniqueDays] || 0;
 
     sessionStorage.setItem('hstSelectedSlots', JSON.stringify(selected));
@@ -605,16 +632,16 @@ document.addEventListener('DOMContentLoaded', () => {
     sessionStorage.setItem('hstHours', String(hoursPerMonth));
     sessionStorage.setItem('hstPrice', String(price));
 
-    outDays.textContent  = uniqueDays;
+    outDays.textContent = uniqueDays;
     outHours.textContent = hoursPerMonth;
     outPrice.textContent = `$${price}`;
     outList.innerHTML = selected.length
-      ? selected.map(s=>`<li>${s.day} ${s.start}–${s.end}</li>`).join('')
+      ? selected.map(s => `<li>${s.day} ${s.start}–${s.end}</li>`).join('')
       : '<li>No time selected yet.</li>';
 
     // hidden fields for email
-    hidSlots.value = selected.map(s=>`${s.day} ${s.start}-${s.end}`).join(', ');
-    hidDays.value  = String(uniqueDays);
+    hidSlots.value = selected.map(s => `${s.day} ${s.start}-${s.end}`).join(', ');
+    hidDays.value = String(uniqueDays);
     hidHours.value = String(hoursPerMonth);
     hidPrice.value = `$${price}`;
   }
@@ -622,7 +649,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // before submit: ensure selection + set correct _next URL
   const form = document.getElementById('reg-form');
-  form.addEventListener('submit', (e)=>{
+  form.addEventListener('submit', (e) => {
     if (!hidSlots.value.trim()) { e.preventDefault(); alert('Please select at least one time slot.'); return; }
     const next = form.querySelector('input[name="_next"]');
     const base = (location.origin && location.origin !== 'null')
@@ -633,14 +660,14 @@ document.addEventListener('DOMContentLoaded', () => {
 })();
 
 /* C) Programs page: show 3s toast after email redirect */
-(function(){
+(function () {
   if (!/programs-pricing\.html/i.test(location.pathname)) return;
   if (new URLSearchParams(location.search).get('toast') !== 'sent') return;
   const el = document.createElement('div');
   el.id = 'hst-toast';
   el.textContent = 'Your information has been emailed to homeschooltutor.com@gmail.com. We’ll reach back in 1–2 business days.';
   document.body.appendChild(el);
-  setTimeout(()=> el.remove(), 3000);
+  setTimeout(() => el.remove(), 3000);
 })();
 /* ===========================
    Worksheets: locked thumbnails

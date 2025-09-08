@@ -13,8 +13,8 @@
   <meta property="og:description" content="Flexible tutoring plans to fit your child’s schedule." />
   <meta property="og:image" content="assets/img/og-image.jpg" />
 
-  <link rel="preload" href="assets/css/style.css" as="style" />
-  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="preload" href="assets/css/style.css?v=20250908-4" as="style" />
+  <link rel="stylesheet" href="assets/css/style.css?v=20250908-4" />
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -131,14 +131,13 @@
 
       <div class="sched-layout">
         <!-- Grid Panel -->
-        <div class="grid-panel glass">
-          <div class="grid-head">
-            <span class="time-col">Time</span>
-            <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span>
-          </div>
+        <div class="grid-panel">
           <!-- Grid rendered by JS -->
-          <div id="slot-grid" class="slot-grid" role="grid" aria-label="Weekly timetable"></div>
-
+          <div id="grid-head" class="grid-head" data-days="Mon,Tue,Wed,Fri">
+            <span class="time-col">Time</span>
+            <span>Mon</span><span>Tue</span><span>Wed</span><span>Fri</span>
+          </div>
+          <div id="slot-grid" class="slot-grid" data-days="Mon,Tue,Wed,Fri"></div>
           <div class="legend">
             <span class="dot selected"></span> Selected
             <span class="dot available"></span> Available
@@ -182,6 +181,6 @@
     </div>
   </footer>
 
-  <script defer src="assets/js/main.js"></script>
+  <script defer src="assets/js/main.js?v=20250908-3"></script>
 </body>
 </html>
