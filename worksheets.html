@@ -14,8 +14,17 @@
   <meta property="og:image" content="assets/img/og-image.jpg" />
 
   <!-- Styles -->
-  <link rel="preload" href="assets/css/style.css?v=20250908-4" as="style" />
-  <link rel="stylesheet" href="assets/css/style.css?v=20250908-4">
+  <link rel="preload" href="assets/css/style.css?v=20250908-5" as="style" />
+  <link rel="stylesheet" href="assets/css/style.css?v=20250908-5">
+  <!-- Inline mobile fallback to ensure nav overlay styles apply immediately -->
+  <style>
+    @media (max-width: 860px) {
+      .primary-nav{ background: rgba(255,255,255,0.96) !important; -webkit-backdrop-filter: blur(28px) !important; backdrop-filter: blur(28px) !important; border-top-left-radius: 40px !important; border-top-right-radius: 40px !important; }
+      .primary-nav.open{ opacity: 1 !important; transform: translateX(-50%) translateY(0) !important; max-height: 78vh !important; }
+      .primary-nav a{ text-align: center !important; }
+      .primary-nav .btn.btn-primary{ background: var(--primary) !important; color: #fff !important; }
+    }
+  </style>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -104,7 +113,7 @@
       </header>
 
       <div class="wks-how-grid">
-        <aside class="wks-pillars glass" aria-label="Teaching pillars">
+  <aside class="wks-pillars glass" aria-label="Teaching pillars" style="text-align:center;">
           <ul class="wks-pillar-list" role="list">
             <li>
               <span class="wks-pill-badge">Curriculum-Aligned</span>
@@ -153,70 +162,70 @@
         <article class="wks-faq-item glass">
           <button class="wks-faq-q" aria-expanded="false" aria-controls="wks-a1" id="wks-q1" role="button">Which grades do you support?</button>
           <div id="wks-a1" class="wks-faq-a" role="region" aria-labelledby="wks-q1">
-            <p>We provide worksheets and practice packs for <strong>Grades 1–8</strong>, aligned to Canadian curriculum expectations.</p>
+            <p>We support learners in <strong>Grades 1–8</strong> across Math, English, and Science. Packs are sequenced by grade and strand, and students are placed by a short diagnostic so work is appropriately challenging. Small groups allow the teacher to adjust pacing and give targeted feedback each week.</p>
           </div>
         </article>
 
         <article class="wks-faq-item glass">
           <button class="wks-faq-q" aria-expanded="false" aria-controls="wks-a2" id="wks-q2" role="button">Are worksheets aligned to the Canadian curriculum?</button>
           <div id="wks-a2" class="wks-faq-a" role="region" aria-labelledby="wks-q2">
-            <p>Yes. Packs are mapped to Ontario and Canadian expectations with skills sequenced by grade.</p>
+            <p>Yes. Every pack is mapped to <strong>Ontario &amp; Canadian curriculum expectations</strong> and covers the required strands (e.g., Number, Algebra, Geometry/Measurement, Data). Material is written and reviewed by an OCT‑certified teacher and updated during the year so examples, vocabulary, and problem types match current expectations.</p>
           </div>
         </article>
 
         <article class="wks-faq-item glass">
           <button class="wks-faq-q" aria-expanded="false" aria-controls="wks-a3" id="wks-q3" role="button">How much homework is assigned each week?</button>
           <div id="wks-a3" class="wks-faq-a" role="region" aria-labelledby="wks-q3">
-            <p>Typically <strong>1–2 short sheets</strong>, tailored to your child’s pace and level.</p>
+            <p>Homework is usually <strong>1–2 short sheets per week</strong> (about 10–20 minutes each). The goal is to reinforce class learning, not overwhelm. We sometimes add an optional “challenge” question; during assessment or project weeks, homework may be reduced or skipped.</p>
           </div>
         </article>
 
         <article class="wks-faq-item glass">
           <button class="wks-faq-q" aria-expanded="false" aria-controls="wks-a4" id="wks-q4" role="button">Can you adjust difficulty for my child?</button>
           <div id="wks-a4" class="wks-faq-a" role="region" aria-labelledby="wks-q4">
-            <p>Absolutely. We tier questions and swap packs to keep challenge appropriate.</p>
+            <p>Absolutely. We use tiered practice—<em>Foundations</em>, <em>Core</em>, and <em>Stretch</em>—so we can move a student up or down in difficulty without changing the topic. The teacher swaps packs, adjusts the number of questions, and adds mini‑lessons where needed. If work is ever too easy or too hard, we change it for the next session.</p>
           </div>
         </article>
 
         <article class="wks-faq-item glass">
           <button class="wks-faq-q" aria-expanded="false" aria-controls="wks-a5" id="wks-q5" role="button">Do you offer topic-specific practice (e.g., Fractions, Reading)?</button>
           <div id="wks-a5" class="wks-faq-a" role="region" aria-labelledby="wks-q5">
-            <p>Yes—Math topics like Fractions, Decimals, Geometry; English reading &amp; writing; and Science skills.</p>
+            <p>Yes. Common requests include Math (Fractions, Decimals &amp; Percents, Long Division, Geometry/Measurement, Word Problems), English (Reading Comprehension, Writing &amp; Grammar, Vocabulary), and Science skills. Tell us the topic and grade; we’ll prepare a focused set of pages.</p>
           </div>
         </article>
 
         <article class="wks-faq-item glass">
           <button class="wks-faq-q" aria-expanded="false" aria-controls="wks-a6" id="wks-q6" role="button">How do parents receive the worksheets/homework?</button>
           <div id="wks-a6" class="wks-faq-a" role="region" aria-labelledby="wks-q6">
-            <p>We provide printed sheets and downloadable PDFs. We can also email packs upon request.</p>
+            <p>Students receive printed sheets in class and a <strong>PDF copy by email</strong> when requested. If a class is missed, we send a make‑up pack digitally. All files are easy to print at home, and we’re happy to resend or provide extra copies.</p>
           </div>
         </article>
 
         <article class="wks-faq-item glass">
           <button class="wks-faq-q" aria-expanded="false" aria-controls="wks-a7" id="wks-q7" role="button">What if my child finishes too quickly or struggles?</button>
           <div id="wks-a7" class="wks-faq-a" role="region" aria-labelledby="wks-q7">
-            <p>We monitor progress and adjust—adding challenge problems or extra scaffolding as needed.</p>
+            <p>We adjust pacing right away. Fast finishers get <em>Stretch</em> problems, puzzles, or short projects to deepen understanding. Students who need support receive scaffolded questions, worked examples, and extra small‑group help. Parents get quick updates so everyone knows the plan.</p>
           </div>
         </article>
 
         <article class="wks-faq-item glass">
           <button class="wks-faq-q" aria-expanded="false" aria-controls="wks-a8" id="wks-q8" role="button">Do you provide answer keys or example solutions?</button>
           <div id="wks-a8" class="wks-faq-a" role="region" aria-labelledby="wks-q8">
-            <p>Yes. Many packs include answer keys or example solutions for review at home.</p>
+            <p>Most Math packs include <strong>answer keys and worked solutions</strong>; English and Science sets often include sample responses or rubrics. We encourage students to attempt independently first, then use solutions for checking and discussion at home.</p>
           </div>
         </article>
 
         <article class="wks-faq-item glass">
           <button class="wks-faq-q" aria-expanded="false" aria-controls="wks-a9" id="wks-q9" role="button">Are PDFs printable and device-friendly?</button>
           <div id="wks-a9" class="wks-faq-a" role="region" aria-labelledby="wks-q9">
-            <p>All PDFs are optimized for printing and easy on-screen viewing.</p>
+            <p>Yes. PDFs are designed for easy printing on Letter/A4 with printer‑safe margins and readable fonts. They also display well on phones and tablets, with clear spacing, grayscale‑friendly diagrams, and clickable links where applicable.</p>
           </div>
         </article>
 
         <article class="wks-faq-item glass">
           <button class="wks-faq-q" aria-expanded="false" aria-controls="wks-a10" id="wks-q10" role="button">How do I request extra practice for tests?</button>
           <div id="wks-a10" class="wks-faq-a" role="region" aria-labelledby="wks-q10">
-            <p>Contact us with your topics and test date—we’ll prepare focused packs.</p>
+            <p>Just send us the <strong>topic(s)</strong> and the <strong>test date</strong>. We’ll create a mini‑pack that includes quick review notes, targeted practice, and a short check to build confidence. If timing allows, we can also schedule a brief review during class.</p>
           </div>
         </article>
       </div>
@@ -247,7 +256,7 @@
   </footer>
 
   <!-- Scripts -->
-  <script defer src="assets/js/main.js"></script>
+  <script defer src="assets/js/main.js?v=20250908-4"></script>
   <!-- Chat widget -->
     <div id="chat-widget" class="chat-widget" aria-hidden="true">
     <div class="chat-panel glass" role="dialog" aria-modal="true" aria-labelledby="chat-title">

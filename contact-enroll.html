@@ -7,8 +7,17 @@
   <meta name="description" content="Contact Home School Tutor to book a free assessment or enroll. Small-group, OCT-certified tutoring in Brampton." />
   <link rel="icon" href="favicon.ico" />
   <link rel="manifest" href="site.webmanifest" />
-  <link rel="preload" href="assets/css/style.css?v=20250908-4" as="style" />
-  <link rel="stylesheet" href="assets/css/style.css?v=20250908-4" />
+  <link rel="preload" href="assets/css/style.css?v=20250908-5" as="style" />
+  <link rel="stylesheet" href="assets/css/style.css?v=20250908-5" />
+  <!-- Inline mobile fallback to ensure nav overlay styles apply immediately -->
+  <style>
+    @media (max-width: 860px) {
+      .primary-nav{ background: rgba(255,255,255,0.96) !important; -webkit-backdrop-filter: blur(28px) !important; backdrop-filter: blur(28px) !important; border-top-left-radius: 40px !important; border-top-right-radius: 40px !important; }
+      .primary-nav.open{ opacity: 1 !important; transform: translateX(-50%) translateY(0) !important; max-height: 78vh !important; }
+      .primary-nav a{ text-align: center !important; }
+      .primary-nav .btn.btn-primary{ background: var(--primary) !important; color: #fff !important; }
+    }
+  </style>
   <style>
     /* Inline override to ensure the navbar Contact/Enroll button is visible
        immediately on this page load, even if external CSS is cached. */
@@ -17,6 +26,10 @@
       color: #000 !important;
       font-weight: 800 !important;
     }
+  </style>
+  <style>
+    /* Fallback toast style (global CSS already has this, but ensure visible here) */
+    #hst-toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--primary,#2d77ff);color:#fff;padding:18px 22px;border-radius:24px;box-shadow:0 10px 30px rgba(25,69,154,.25);z-index:9999;max-width:min(92vw,680px);line-height:1.4}
   </style>
 </head>
 
@@ -50,7 +63,7 @@
   </header>
 
   <main id="main-content" class="container">
-    <header class="section-head center" style="margin-top: var(--space-8);">
+  <header class="section-head center" style="margin-top: 80px;">
       <h1>Contact &amp; Enrollment</h1>
       <p class="section-sub">Have questions or ready to book a free diagnostic? Send your details and we’ll connect.</p>
     </header>
@@ -90,7 +103,7 @@
             <input type="hidden" name="_subject" value="Contact/Enroll Submission – Home School Tutor" />
             <input type="hidden" name="_captcha" value="false" />
             <input type="hidden" name="_template" value="table" />
-            <input type="hidden" name="_next" value="programs-pricing.html?toast=sent#scheduler" />
+            <input type="hidden" name="_next" value="" />
 
             <!-- Hidden fields populated from selection -->
             <input type="hidden" name="Selected_Slots" id="ce-slots-hidden" />
@@ -163,7 +176,7 @@
     </div>
   </footer>
 
-  <script defer src="assets/js/main.js"></script>
+  <script defer src="assets/js/main.js?v=20250908-4"></script>
   <script>
     // Prefill summary + hidden fields from localStorage (same keys as programs/register)
     (function(){
@@ -186,6 +199,29 @@
       setVal('ce-days-hidden',  days);
       setVal('ce-hours-hidden', hours);
       setVal('ce-price-hidden', price);
+    })();
+  </script>
+  <script>
+    (function(){
+      const form = document.getElementById('ce-form');
+      if(form){
+        form.addEventListener('submit', function(){
+          const next = form.querySelector('input[name="_next"]');
+          const backUrl = (location.origin && location.origin !== 'null')
+            ? `${location.origin}${location.pathname}?toast=sent#top`
+            : `contact-enroll.html?toast=sent#top`;
+          if(next) next.value = backUrl;
+        });
+      }
+      const params = new URLSearchParams(location.search);
+      if(params.get('toast') === 'sent'){
+        const el = document.createElement('div');
+        el.id = 'hst-toast';
+        el.textContent = 'Your information has been emailed to homeschooltutor.com@gmail.com. We’ll reach back in 1–2 business days.';
+        document.body.appendChild(el);
+        setTimeout(()=>{ try{ el.remove(); }catch(e){} }, 5000);
+        try{ history.replaceState({}, '', location.pathname + (location.hash||'')); }catch(e){}
+      }
     })();
   </script>
 </body>

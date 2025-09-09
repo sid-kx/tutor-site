@@ -9,19 +9,20 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!toggle || !nav) return;
 
   const closeNav = () => {
-    nav.classList.remove('open');
-    toggle.setAttribute('aria-expanded', 'false');
+  nav.classList.remove('open');
+  toggle.setAttribute('aria-expanded', 'false');
   };
 
   const openNav = () => {
-    nav.classList.add('open');
-    toggle.setAttribute('aria-expanded', 'true');
-    // Focus first link for accessibility
-    const firstLink = nav.querySelector('a');
-    if (firstLink) firstLink.focus({ preventScroll: true });
+  nav.classList.add('open');
+  toggle.setAttribute('aria-expanded', 'true');
+  // Delay focusing the first link slightly so the slide-down animation completes
+  const firstLink = nav.querySelector('a');
+  if (firstLink) setTimeout(() => firstLink.focus({ preventScroll: true }), 260);
   };
 
-  toggle.addEventListener('click', () => {
+  toggle.addEventListener('click', (e) => {
+    e.stopPropagation();
     const expanded = toggle.getAttribute('aria-expanded') === 'true';
     expanded ? closeNav() : openNav();
   });
@@ -31,8 +32,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Escape') closeNav();
   });
 
-  // Click outside to close
+  // Click outside to close (don't close when clicking inside nav)
   document.addEventListener('click', (e) => {
+    const isOpen = nav.classList.contains('open');
+    if (!isOpen) return;
     if (!nav.contains(e.target) && !toggle.contains(e.target)) {
       closeNav();
     }
@@ -781,4 +784,130 @@ document.addEventListener('DOMContentLoaded', initContactEnroll);
 
   document.body.appendChild(t);
   setTimeout(() => t.remove(), 3000);
+})();
+/* ===========================
+   Scroll-reactive background
+   =========================== */
+(function initScrollBackground(){
+  // Ensure CSS for background layers exists even if stylesheet wasn't updated
+  if (!document.getElementById('hst-bg-style')) {
+    const css = `
+    :root{
+      /* even stronger defaults so the image shows more detail immediately */
+      --bg-drop-opacity: 0.22;
+      --bg-drop-blur: 36px;
+      --bg-overlay: rgba(255,255,255,0.9);
+    }
+    body::before, body::after{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:-2;
+    }
+    body::before{
+      background-image:url("assets/img/bg-droplets.jpg");
+      background-size:cover;
+      background-position:center;
+      background-repeat:no-repeat;
+      background-attachment:fixed;
+      opacity:var(--bg-drop-opacity);
+      filter:blur(var(--bg-drop-blur));
+      transform:scale(1.03);
+      will-change:opacity,filter,transform;
+    }
+    body::after{
+      z-index:-1;
+      background:var(--bg-overlay);
+      transition:background 200ms linear;
+    }
+    @media (prefers-reduced-motion: reduce){
+      body::before{ filter: blur(14px); }
+    }`;
+    const styleEl = document.createElement('style');
+    styleEl.id = 'hst-bg-style';
+    styleEl.appendChild(document.createTextNode(css));
+    document.head.appendChild(styleEl);
+  }
+
+  // Guard – run once
+  if (window.__hstBgInit) return;
+  window.__hstBgInit = true;
+
+  const docEl = document.documentElement;
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function lerp(a, b, t){ return a + (b - a) * t; }
+  function clamp01(v){ return Math.max(0, Math.min(1, v)); }
+
+  // Update CSS vars from scroll progress
+  let ticking = false;
+  function update(){
+    ticking = false;
+
+    const max = (docEl.scrollHeight - window.innerHeight) || 1;
+    const p = clamp01(window.scrollY / max);   // 0 at top → 1 at bottom
+
+  // Visibility: make the droplets much stronger as you scroll
+  // start subtle but increase to a much higher opacity so the texture is obvious
+  // Make the droplets fully visible as you scroll (show all detail at bottom)
+  const opacity = lerp(0.22, 1.00, p);
+  // Blur: start heavier and go to completely sharp (0px) at the bottom
+  const blurPx  = prefersReduced ? 14 : lerp(36, 0, p);
+  // Overlay: fade the opaque white overlay into a nearly-transparent pastel
+  // Compute RGB blend between white and a light brand blue, and reduce alpha as you scroll
+  const start = { r: 255, g: 255, b: 255 };        // white
+  const end   = { r: 234, g: 243, b: 255 };        // #eaf3ff
+  const r = Math.round(lerp(start.r, end.r, p));
+  const g = Math.round(lerp(start.g, end.g, p));
+  const b = Math.round(lerp(start.b, end.b, p));
+  const alpha = lerp(0.9, 0.0, p);
+  const overlay = `rgba(${r},${g},${b},${alpha.toFixed(2)})`;
+
+  document.documentElement.style.setProperty('--bg-drop-opacity', opacity.toFixed(3));
+  document.documentElement.style.setProperty('--bg-drop-blur', `${blurPx.toFixed(1)}px`);
+  document.documentElement.style.setProperty('--bg-overlay', overlay);
+  }
+
+  function onScroll(){
+    if (!ticking){
+      ticking = true;
+      requestAnimationFrame(update);
+    }
+  }
+
+  // Init + listeners
+  update();
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+})();
+/* Contact/Enroll: redirect back with toast after email */
+(function () {
+  // find the contact/enroll form
+  const form = document.getElementById('ce-form') 
+            || document.querySelector('form[data-form="contact-enroll"]');
+  if (form) {
+    form.addEventListener('submit', () => {
+      // compute redirect back to this page with a toast flag
+      const nextInput = form.querySelector('input[name="_next"]');
+      const backUrl = (location.origin && location.origin !== 'null')
+        ? `${location.origin}/contact-enroll.html?toast=sent#top`
+        : `contact-enroll.html?toast=sent#top`;
+      if (nextInput) nextInput.value = backUrl;
+    });
+  }
+
+  // when redirected back, show the toast for 5s
+  const onContactPage = /contact-enroll\.html/i.test(location.pathname);
+  const toastWanted = new URLSearchParams(location.search).get('toast') === 'sent';
+  if (onContactPage && toastWanted) {
+    const el = document.createElement('div');
+    el.id = 'hst-toast';
+    el.textContent =
+      'Your information has been emailed to homeschooltutor.com@gmail.com. We’ll reach back in 1–2 business days.';
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 5000); // 5 seconds
+    // optional: clean ?toast=sent from the address bar
+    try { history.replaceState({}, '', location.pathname + location.hash); } catch {}
+  }
 })();

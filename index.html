@@ -24,8 +24,23 @@
   <link rel="manifest" href="site.webmanifest" />
 
   <!-- CSS -->
-    <link rel="preload" href="assets/css/style.css?v=20250908-4" as="style" />
-    <link rel="stylesheet" href="assets/css/style.css?v=20250908-4" />
+  <link rel="preload" href="assets/css/style.css?v=20250908-5" as="style" />
+    <link rel="stylesheet" href="assets/css/style.css?v=20250908-6">
+    <!-- Inline mobile fallback to ensure nav overlay styles apply immediately -->
+    <style>
+      @media (max-width: 860px) {
+        .primary-nav{
+          background: rgba(255,255,255,0.96) !important;
+          -webkit-backdrop-filter: blur(28px) !important;
+          backdrop-filter: blur(28px) !important;
+          border-top-left-radius: 40px !important;
+          border-top-right-radius: 40px !important;
+        }
+        .primary-nav.open{ opacity: 1 !important; transform: translateX(-50%) translateY(0) !important; max-height: 78vh !important; }
+        .primary-nav a{ text-align: center !important; }
+        .primary-nav .btn.btn-primary{ background: var(--primary) !important; color: #fff !important; }
+      }
+    </style>
 
   <!-- JSON-LD (basic) -->
   <script type="application/ld+json">
@@ -109,7 +124,7 @@
         <figure class="hero-art glass">
         <img src="assets/img/math-first.png" alt="Math-first: collage of math symbols and tools" width="900" height="600" loading="eager" decoding="async" fetchpriority="high" style="object-position:center;" />
         <figcaption class="visually-hidden">Small-group learning environment</figcaption>
-        <div class="hero-badge" aria-hidden="true">Math-first</div>
+  <!-- hero-badge 'Math-first' removed as requested -->
         </figure>
     </div>
     </section>
@@ -230,10 +245,7 @@
         </article>
     </div>
 
-    <div class="section-cta center">
-        <a class="btn btn-primary" href="/programs-pricing.html">View full program & schedule</a>
-        <a class="btn btn-outline" href="/contact-enroll.html">Book free assessment</a>
-    </div>
+  <!-- CTAs removed as requested -->
     </section>
 <!-- VALUE & PRICING -->
     <section id="pricing" class="section pricing-highlight" aria-labelledby="pricing-title">
@@ -262,10 +274,7 @@
             <li>Homework guidance included</li>
         </ul>
 
-        <div class="price-ctas">
-            <a class="btn btn-primary" href="/contact-enroll.html">Enroll / Free Assessment</a>
-            <a class="btn btn-outline" href="/programs-pricing.html#schedule">See full schedule</a>
-        </div>
+  <!-- CTAs removed from Group Program card as requested -->
 
         <p class="fine-print">Extra classes available on request; monthly total may vary when added.</p>
         </article>
@@ -375,10 +384,7 @@
         </figure>
     </div>
 
-    <div class="section-cta center">
-        <a class="btn btn-primary" href="/contact-enroll.html">Book free assessment</a>
-        <a class="btn btn-outline" href="/programs-pricing.html">See programs & pricing</a>
-    </div>
+  <!-- CTAs removed from testimonials section as requested -->
     </section>
     <!-- WORKSHEETS TEASER -->
     <section id="worksheets-teaser" class="section worksheets-teaser" aria-labelledby="worksheets-title">
@@ -477,10 +483,7 @@
         </article>
     </div>
 
-    <div class="section-cta center">
-        <a class="btn btn-primary" href="worksheets.html">See all worksheets</a>
-        <a class="btn btn-outline" href="contact-enroll.html">Need help? Book assessment</a>
-    </div>
+  <!-- CTAs removed from worksheets teaser as requested -->
     </section>
     <!-- ABOUT (OCT TEACHER) -->
     <section id="about" class="section about-teacher" aria-labelledby="about-title">
@@ -577,7 +580,7 @@
           <p><strong>Location:</strong> Steeles &amp; McLaughlin, Brampton</p>
           <p><strong>Hours:</strong> Mon–Fri • 4:00–8:00 PM</p>
           <p class="note">Note: Web billing isn’t enabled. We accept e‑transfer. Please contact us to book a free assessment and finalize payment.</p>
-          <a class="btn btn-primary" href="contact-enroll.html">Book Free Assessment</a>
+          <!-- Book Free Assessment CTA removed from footer as requested -->
         </section>
       </div>
 
@@ -625,6 +628,6 @@
   </footer>
 
   <noscript>This site works without JavaScript, but the menu won’t collapse on mobile.</noscript>
-  <script defer src="assets/js/main.js?v=20250908-2"></script>
+  <script defer src="assets/js/main.js?v=20250908-4"></script>
 </body>
 </html>

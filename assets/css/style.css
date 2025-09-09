@@ -24,6 +24,8 @@
   --space-4: 24px;
   --space-5: 32px;
   --space-6: 48px;
+  --space-7: 64px;
+  --space-8: 80px;
 }
 
 /* =========
@@ -91,16 +93,30 @@ a:hover { text-decoration: underline; }
 
 /* Brand */
 
-.brand { display: inline-flex; align-items: center; gap: var(--space-2); }
-.brand-name { font-weight: 700; letter-spacing: 0.2px; }
-
+/* Brand */
+.brand { 
+  display: inline-flex; 
+  align-items: center; 
+  gap: var(--space-2); 
+  text-decoration: none;          /* no underline on brand link */
+  line-height: 1;                 /* tighter vertical alignment */
+}
+.brand:hover,
+.brand:focus { 
+  text-decoration: none;          /* keep brand link clean on hover/focus */
+}
+.brand-name { 
+  font-weight: 900;               /* bolder title */
+  letter-spacing: 0.2px; 
+}
 /* Navbar brand logo size */
 .brand-logo{
-  width: 32px;
-  height: 32px;
+  width: 36px;                    /* slightly larger logo */
+  height: 36px;
   display: block;
   object-fit: contain;
   border-radius: 8px;
+  flex-shrink: 0;                 /* keep size stable in flex row */
 }
 
 /* Nav */
@@ -136,18 +152,85 @@ a:hover { text-decoration: underline; }
 }
 .nav-toggle:focus { outline: 3px solid rgba(37,99,235,0.4); }
 @media (max-width: 860px) {
+  /* Mobile: floating, rounded nav panel that slides down */
   .primary-nav {
-    position: absolute; right: var(--space-3); top: 64px;
-    background: var(--glass-bg); backdrop-filter: blur(var(--blur));
-    -webkit-backdrop-filter: blur(var(--blur));
-    border: 1px solid var(--glass-border);
-    box-shadow: var(--glass-shadow);
-    padding: var(--space-3);
-    border-radius: var(--radius);
-    display: none;
+    position: fixed;
+    left: 50%;
+    top: 60px; /* sits below the sticky header and slightly overlaps to look connected */
+    transform: translateX(-50%) translateY(-10px);
+    width: calc(100% - 48px);
+    max-width: 540px;
+    /* stronger opaque background with heavy blur so content underneath is not readable */
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+    border: 1px solid rgba(15,23,42,0.06);
+    box-shadow: 0 28px 48px rgba(15,23,42,0.16);
+    padding: calc(var(--space-3) + 6px);
+    /* outward, prominent top radius to show connection to the header */
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    /* animation-friendly state */
+    opacity: 0;
+    transform-origin: top center;
+    transition: opacity .32s cubic-bezier(.2,.9,.2,1), transform .32s cubic-bezier(.2,.9,.2,1), max-height .36s ease;
+    max-height: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1500;
   }
-  .primary-nav.open { display: block; }
+
+  /* Open state: slide down, become visible and interactive */
+  .primary-nav.open {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  max-height: 78vh; /* allow the panel to expand with content */
+  pointer-events: auto;
+  }
+
   .primary-nav ul { flex-direction: column; align-items: stretch; gap: var(--space-2); }
+
+  /* Make each link fill the panel and look like a stacked menu */
+  .primary-nav a {
+    display: block;
+    padding: 14px 12px;
+    border-radius: 12px;
+    text-align: center; /* center the link text */
+    font-weight: 600;
+    color: var(--text);
+    background: transparent;
+  }
+
+  /* Ensure primary CTA inside nav fills the panel width and sits with the links */
+  .primary-nav .btn { width: 100%; margin: 8px 0 0; display: inline-flex; justify-content: center; align-items: center; }
+
+  /* Make the primary CTA inside the nav prominent and opaque */
+  .primary-nav .btn.btn-primary {
+    background: var(--primary);
+    color: #fff;
+    border: 0;
+    padding: 12px 16px;
+    border-radius: 9999px; /* pill */
+    box-shadow: 0 10px 24px rgba(37,99,235,0.12);
+  }
+
+  /* Slight inner spacing so the panel top visually connects to the header with outward curve */
+  .primary-nav::before{
+    content: '';
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    top: -10px;
+    height: 22px;
+    background: rgba(255,255,255,0.96);
+    border-top-left-radius: 36px;
+    border-top-right-radius: 36px;
+    z-index: -1;
+    filter: blur(6px);
+    pointer-events: none;
+  }
 }
 
 /* Desktop: hide hamburger */
@@ -1061,6 +1144,13 @@ section + section { margin-top: var(--space-6); }
 @media (min-width: 960px) { .wks-how-grid { grid-template-columns: .9fr 1.1fr; } }
 .wks-pillars { padding: var(--space-4); border-radius: var(--radius); background: linear-gradient(180deg, rgba(255,255,255,0.60), rgba(255,255,255,0.50)); }
 .wks-pillar-list { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--space-3); }
+.wks-pillar-list li {
+  /* Stack badge + paragraph vertically and center-align them in the pillar box */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
 .wks-pill-badge { display: inline-block; padding: 6px 10px; border-radius: 9999px; background: rgba(37,99,235,0.12); color: var(--primary); font-weight: 800; border: 1px solid rgba(255,255,255,0.6); margin-bottom: 6px; }
 .wks-how-text { padding: var(--space-4); border-radius: var(--radius); background: linear-gradient(180deg, rgba(255,255,255,0.60), rgba(255,255,255,0.50)); }
 .wks-checklist { list-style: none; padding: 0; margin: var(--space-3) 0 0; display: grid; gap: 10px; }
@@ -1172,7 +1262,18 @@ section + section { margin-top: var(--space-6); }
 }
 @media (max-width: 420px) {
   .wks-tabs { padding: var(--space-2); gap: var(--space-2); }
-  .wks-tab { padding: 8px; font-size: 0.95rem; }
+  /* Make the grade buttons slightly smaller and guarantee centered, multi-line layout */
+  .wks-tab {
+    padding: 8px;
+    font-size: 0.82rem; /* reduced so "Grade X" fits comfortably */
+    text-align: center;
+    line-height: 1.05;
+    min-height: 56px; /* gives vertical breathing room so text is centered in each box */
+    display: inline-flex; /* reinforce centering for multi-line text */
+    align-items: center;
+    justify-content: center;
+    white-space: normal;
+  }
 }
 /* ===== Chat widget (chat-*) ===== */
 .chat-launcher{
@@ -1443,3 +1544,103 @@ img[data-role="wks-thumb"]{
 
 /* Minor spacing for CTA buttons */
 .section-cta .btn { margin-right: var(--space-2); }
+/* ===========================
+   Site background (scroll-reactive)
+   =========================== */
+
+/* Tunables (JS will update these) */
+:root{
+  /* How visible the droplets are (0–1) */
+  --bg-drop-opacity: 0.22;   /* at top — stronger default */
+  /* How blurry the droplets are (px) */
+  --bg-drop-blur: 36px;      /* at top — heavier blur initially */
+  /* Overlay color that sits above the image and below content */
+  --bg-overlay: rgba(255,255,255,0.9);     /* mostly opaque to start */
+}
+
+/* Create two fixed layers behind everything using pseudo elements.
+   No HTML changes needed. */
+body::before,
+body::after{
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -2;            /* keep behind all content */
+}
+
+/* Droplets image layer */
+body::before{
+  background-image: url("/assets/img/bg-droplets.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;   /* subtle parallax feel */
+  opacity: var(--bg-drop-opacity);
+  filter: blur(var(--bg-drop-blur));
+  transform: scale(1.03);         /* hide blur edges */
+  will-change: opacity, filter, transform;
+}
+
+/* Tint/overlay layer – makes start white, blends to brand blue */
+body::after{
+  z-index: -1;                    /* above image, below page */
+  background: var(--bg-overlay);
+  transition: background 200ms linear; /* smooth color change on resize */
+}
+
+/* Respect reduced-motion */
+@media (prefers-reduced-motion: reduce){
+  body::before{ filter: blur(14px); }
+}
+/* ===========================
+   Mobile fit: scheduler + page sizing
+   =========================== */
+@media (max-width: 640px) {
+  /* Tighter container padding so the grid has more room */
+  .container { padding-inline: 14px; }
+
+  /* Headline & helper text already use clamp(), so they scale fine.
+     We only tighten the grid itself. */
+
+  /* Apply to BOTH pages:
+     - Programs & Pricing grid uses .grid-head + .slot-grid
+     - Registration grid uses #reg-slot-grid (time cells carry .timecell) */
+  .grid-head,
+  .slot-grid,
+  #reg-slot-grid {
+    /* Make time column narrower on phones, keep 4 equal day columns */
+    grid-template-columns: 84px repeat(4, 1fr);
+    column-gap: 8px;
+  }
+
+  /* Time labels: smaller, wrap nicely */
+  .timecell {
+    padding: 6px 4px;
+    font-size: 12px;
+    line-height: 1.15;
+    word-break: break-word;
+    white-space: normal; /* allow wrap for times like "4:00 PM – 5:30 PM" */
+  }
+
+  /* Slot buttons: shorter & tighter for more rows on screen */
+  .slot {
+    min-height: 40px;
+    padding: 6px 6px;
+    font-size: 0.95rem;
+  }
+
+  /* Legend pills: shrink spacing a touch */
+  .legend { gap: 12px; }
+}
+
+/* Extra guard for super-small screens */
+@media (max-width: 380px) {
+  .grid-head,
+  .slot-grid,
+  #reg-slot-grid {
+    grid-template-columns: 76px repeat(4, 1fr);
+  }
+  .timecell { font-size: 11px; }
+  .slot     { min-height: 38px; font-size: 0.9rem; }
+}

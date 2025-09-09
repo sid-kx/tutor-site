@@ -13,8 +13,17 @@
   <meta property="og:description" content="Flexible tutoring plans to fit your child’s schedule." />
   <meta property="og:image" content="assets/img/og-image.jpg" />
 
-  <link rel="preload" href="assets/css/style.css?v=20250908-4" as="style" />
-  <link rel="stylesheet" href="assets/css/style.css?v=20250908-4" />
+  <link rel="preload" href="assets/css/style.css?v=20250908-5" as="style" />
+  <link rel="stylesheet" href="assets/css/style.css?v=20250908-5" />
+  <!-- Inline mobile fallback to ensure nav overlay styles apply immediately -->
+  <style>
+    @media (max-width: 860px) {
+      .primary-nav{ background: rgba(255,255,255,0.96) !important; -webkit-backdrop-filter: blur(28px) !important; backdrop-filter: blur(28px) !important; border-top-left-radius: 40px !important; border-top-right-radius: 40px !important; }
+      .primary-nav.open{ opacity: 1 !important; transform: translateX(-50%) translateY(0) !important; max-height: 78vh !important; }
+      .primary-nav a{ text-align: center !important; }
+      .primary-nav .btn.btn-primary{ background: var(--primary) !important; color: #fff !important; }
+    }
+  </style>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -181,6 +190,6 @@
     </div>
   </footer>
 
-  <script defer src="assets/js/main.js?v=20250908-3"></script>
+  <script defer src="assets/js/main.js?v=20250908-4"></script>
 </body>
 </html>
