@@ -1571,7 +1571,7 @@ body::after{
 
 /* Droplets image layer */
 body::before{
-  background-image: url("/assets/img/bg-droplets.jpg");
+  background-image: url("../img/bg-droplets.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
