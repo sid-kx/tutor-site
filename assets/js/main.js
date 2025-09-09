@@ -655,10 +655,7 @@ document.addEventListener('DOMContentLoaded', () => {
   form.addEventListener('submit', (e) => {
     if (!hidSlots.value.trim()) { e.preventDefault(); alert('Please select at least one time slot.'); return; }
     const next = form.querySelector('input[name="_next"]');
-    const base = (location.origin && location.origin !== 'null')
-      ? `${location.origin}/programs-pricing.html?toast=sent#scheduler`
-      : `programs-pricing.html?toast=sent#scheduler`;
-    next.value = base;
+    next.value = new URL('programs-pricing.html?toast=sent#scheduler', location.href).toString();
   });
 })();
 
@@ -890,9 +887,7 @@ document.addEventListener('DOMContentLoaded', initContactEnroll);
     form.addEventListener('submit', () => {
       // compute redirect back to this page with a toast flag
       const nextInput = form.querySelector('input[name="_next"]');
-      const backUrl = (location.origin && location.origin !== 'null')
-        ? `${location.origin}/contact-enroll.html?toast=sent#top`
-        : `contact-enroll.html?toast=sent#top`;
+      const backUrl = new URL('contact-enroll.html?toast=sent#top', location.href).toString();
       if (nextInput) nextInput.value = backUrl;
     });
   }
