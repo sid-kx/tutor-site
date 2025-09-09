@@ -906,3 +906,16 @@ document.addEventListener('DOMContentLoaded', initContactEnroll);
     try { history.replaceState({}, '', location.pathname + location.hash); } catch {}
   }
 })();
+// Fallback avatar for any missing/broken testimonial images
+(function () {
+  const fallback = 'assets/img/avatar-default.png';
+  document.querySelectorAll('img.t-avatar').forEach((img) => {
+    // If no src set, assign immediately
+    if (!img.getAttribute('src')) img.src = fallback;
+
+    // If the src fails to load (typo, moved file), swap to fallback
+    img.addEventListener('error', () => {
+      img.src = fallback;
+    });
+  });
+})();

@@ -850,6 +850,21 @@ section + section { margin-top: var(--space-6); }
   border: 1px solid rgba(255,255,255,0.65);
   box-shadow: 0 3px 10px rgba(15,23,42,0.10);
 }
+
+/* Avatar fallback: if src is missing/empty, show default graphic */
+img.t-avatar:not([src]),
+img.t-avatar[src=""],
+img.t-avatar[src=" "] {
+  /* Swap in default image purely with CSS for robustness */
+  content: url("../img/avatar-default.png");
+}
+
+/* Defensive background (old browsers that ignore `content` on <img>) */
+img.t-avatar:not([src]),
+img.t-avatar[src=""],
+img.t-avatar[src=" "] {
+  background: #eef3fb url("../img/avatar-default.png") center/70% no-repeat;
+}
 .t-name { display: block; font-weight: 800; }
 .t-note { display: block; color: rgba(11,18,32,0.70); font-size: 0.95rem; }
 /* ===== About (OCT Teacher) ===== */
